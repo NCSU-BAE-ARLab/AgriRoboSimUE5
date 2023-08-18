@@ -8,7 +8,7 @@ This repo host the Unreal Engine 5 part for the simulation, there is a seperate 
 
 `Test2 5.2` contains UE5.2 version.
 
-The Megascans assets (materials and plants) are not part of this repo, so you need to download those later from UE5.
+*Important*: The Megascans assets (materials and plants) are not part of this repo, so you need to download those later from UE5 or the scenes will have missing high-quality plants and textures.
 
 ## Usage (UE5 portion)
 This is tested on a windows 11 desktop, the UE5 simulation runs in Windows, the ROS part runs in WSL with rosbridge for communications (in theory it doesn't have to be all on one computer because it uses rosbridge).
