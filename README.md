@@ -6,7 +6,7 @@ This repo host the Unreal Engine 5 part for the simulation, there is a seperate 
 
 `Test2` contains UE5.1 version (outdated).
 
-`Test2 5.2` contains UE5.2 version.
+`Test2 5.2` contains UE5.2 version (recommended with updated assets).
 
 *Important*: The Megascans assets (materials and plants) are not part of this repo, so you need to download those later from UE5 or the scenes will have missing high-quality plants and textures.
 
