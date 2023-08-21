@@ -5,25 +5,18 @@
 #include "ROSIntegration/Classes/RI/Topic.h"
 #include "ROSIntegration/Classes/ROSIntegrationGameInstance.h"
 #include "Engine/TextureRenderTarget2D.h"
+#include "opencv2/core.hpp"
 #include "ROSActor.generated.h"
 
 #define ROS2Sim_Str_Topic_STR TEXT("test_str_in")
 #define Sim2ROS_Str_Topic_STR TEXT("test_str_out")
 #define ROS2Sim_Float_Topic_STR TEXT("test_float")
-#define ROS2Sim_Vec3_NONE_1_Topic_STR TEXT("/unreal/nonevec3_1")
-#define ROS2Sim_Vec3_NONE_2_Topic_STR TEXT("/unreal/none/vec3_2")
-#define ROS2Sim_Vec3_0_1_Topic_STR TEXT("/unreal/0/vec3_1")
-#define ROS2Sim_Vec3_0_2_Topic_STR TEXT("/unreal/0/vec3_2")
-#define ROS2Sim_Vec3_1_1_Topic_STR TEXT("/unreal/1/vec3_1")
-#define ROS2Sim_Vec3_1_2_Topic_STR TEXT("/unreal/1/vec3_2")
 
-#define Sim2ROS_Vec3_NONE_WorldPos_Topic_STR TEXT("/unreal/none/reachedgoal")
-#define Sim2ROS_Vec3_0_WorldPos_Topic_STR TEXT("/unreal/0/reachedgoal")
-#define Sim2ROS_Vec3_1_WorldPos_Topic_STR TEXT("/unreal/1/reachedgoal")
-
-#define ROS2Sim_Bool_NONE_Topic_STR TEXT("/unreal/none/takedata")
-#define ROS2Sim_Bool_0_Topic_STR TEXT("/unreal/0/takedata")
-#define ROS2Sim_Bool_1_Topic_STR TEXT("/unreal/1/takedata")
+#define UE5_TOPIC_PREFIX std::string("/unreal")
+#define BOTTOM_JOINTS_TOPIC_ID std::string("/vec3_1")
+#define TOP_JOINTS_TOPIC_ID std::string("/vec3_2")
+#define WORLD_POS_TOPIC std::string("/reachedgoal")
+#define TAKE_IMAGE_TOPIC std::string("/takedata")
 
 
 UCLASS()
@@ -55,17 +48,17 @@ public:
 	//UPROPERTY(BlueprintReadWrite)
 	//	float set_wrist_pos = 0.0;
 	UPROPERTY(BlueprintReadWrite)
-		FVector firstSet;
+		FVector FirstSet;
 	UPROPERTY(BlueprintReadWrite)
-		FVector secondSet;
-	UPROPERTY(BlueprintReadWrite)
+		FVector SecondSet;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		int32 ArmID;
 	UPROPERTY(BlueprintReadWrite)
-		FVector eefJointPos;
+		FVector EEFJointPos;
 	UPROPERTY(BlueprintReadWrite)
-		bool takeData;
-	UPROPERTY(BlueprintReadWrite)
-		UTextureRenderTarget2D *camImage;
+		bool TakeData;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		UTextureRenderTarget2D *CamImage;
 private:
 	UPROPERTY()
 		UROSIntegrationGameInstance* rosinst;

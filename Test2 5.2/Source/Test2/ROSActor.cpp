@@ -60,28 +60,16 @@ void AROSActor::BeginPlay()
 	//UTopic* ROS2Sim_Float_Topic = NewObject<UTopic>(UTopic::StaticClass());
 	//ROS2Sim_Float_Topic->Init(rosinst->ROSIntegrationCore, ROS2Sim_Float_Topic_STR, TEXT("std_msgs/Float32"));
 	//ROS2Sim_Float_Topic->Advertise();
-	auto Vec3_1_Topic_Name = ROS2Sim_Vec3_NONE_1_Topic_STR;
-	auto Vec3_2_Topic_Name = ROS2Sim_Vec3_NONE_2_Topic_STR;
-	auto Vec3_WorldPos_Topic_Name = Sim2ROS_Vec3_NONE_WorldPos_Topic_STR;
-	auto Bool_Topic_Name = ROS2Sim_Bool_NONE_Topic_STR;
-	
-	switch (ArmID)
-	{
-	case 0:
-		Vec3_1_Topic_Name = ROS2Sim_Vec3_0_1_Topic_STR;
-		Vec3_2_Topic_Name = ROS2Sim_Vec3_0_2_Topic_STR;
-		Vec3_WorldPos_Topic_Name = Sim2ROS_Vec3_0_WorldPos_Topic_STR;
-		Bool_Topic_Name = ROS2Sim_Bool_0_Topic_STR;
-		break;
-	case 1:
-		Vec3_1_Topic_Name = ROS2Sim_Vec3_1_1_Topic_STR;
-		Vec3_2_Topic_Name = ROS2Sim_Vec3_1_2_Topic_STR;
-		Vec3_WorldPos_Topic_Name = Sim2ROS_Vec3_1_WorldPos_Topic_STR;
-		Bool_Topic_Name = ROS2Sim_Bool_1_Topic_STR;
-		break;
-	default:
-		break;		
-	}
+
+	auto Vec3_1_Topic_Name = FString((UE5_TOPIC_PREFIX + std::string("/") +
+											std::to_string(ArmID) + BOTTOM_JOINTS_TOPIC_ID).c_str());
+	auto Vec3_2_Topic_Name = FString((UE5_TOPIC_PREFIX + std::string("/") +
+											std::to_string(ArmID) + TOP_JOINTS_TOPIC_ID).c_str());
+	auto Vec3_WorldPos_Topic_Name =FString((UE5_TOPIC_PREFIX + std::string("/") +
+											std::to_string(ArmID) + WORLD_POS_TOPIC).c_str());
+	auto Bool_Topic_Name = FString((UE5_TOPIC_PREFIX + std::string("/") +
+											std::to_string(ArmID) + TAKE_IMAGE_TOPIC).c_str());
+
 	ROS2Sim_Vec3_1_Topic = NewObject<UTopic>(UTopic::StaticClass());
 	ROS2Sim_Vec3_1_Topic->Init(rosinst->ROSIntegrationCore, Vec3_1_Topic_Name, TEXT("geometry_msgs/Vector3"));
 	ROS2Sim_Vec3_1_Topic->Advertise();
@@ -115,7 +103,7 @@ void AROSActor::BeginPlay()
 	};
 	// Subscribe callback to joint angles
 	// first 3 angles
-	Vec3_1SubscribeCallback = [str_topic = Sim2ROS_Str_Topic, fs = &firstSet](TSharedPtr<FROSBaseMsg> msg) -> bool
+	Vec3_1SubscribeCallback = [str_topic = Sim2ROS_Str_Topic, fs = &FirstSet](TSharedPtr<FROSBaseMsg> msg) -> bool
 	{
 		auto Concrete = StaticCastSharedPtr<ROSMessages::geometry_msgs::Vector3>(msg);
 		if (Concrete.IsValid())
@@ -133,7 +121,7 @@ void AROSActor::BeginPlay()
 		return false;
 	};
 	// second 3 angles
-	Vec3_2SubscribeCallback = [str_topic = Sim2ROS_Str_Topic, ss = &secondSet](TSharedPtr<FROSBaseMsg> msg) -> bool
+	Vec3_2SubscribeCallback = [str_topic = Sim2ROS_Str_Topic, ss = &SecondSet](TSharedPtr<FROSBaseMsg> msg) -> bool
 	{
 		auto Concrete = StaticCastSharedPtr<ROSMessages::geometry_msgs::Vector3>(msg);
 		if (Concrete.IsValid())
@@ -151,7 +139,7 @@ void AROSActor::BeginPlay()
 		return false;
 	};
 	// Subscriber callback to data collection signal
-	Bool_SubscribeCallback = [str_topic = Sim2ROS_Str_Topic, take = &takeData](TSharedPtr<FROSBaseMsg> msg) -> bool
+	Bool_SubscribeCallback = [str_topic = Sim2ROS_Str_Topic, take = &TakeData](TSharedPtr<FROSBaseMsg> msg) -> bool
 	{
 		auto Concrete = StaticCastSharedPtr<ROSMessages::std_msgs::Bool>(msg);
 		if (Concrete.IsValid())
@@ -170,7 +158,7 @@ void AROSActor::BeginPlay()
 	received_msg |= ROS2Sim_Vec3_1_Topic->Subscribe(Vec3_1SubscribeCallback);
 	received_msg |= ROS2Sim_Vec3_2_Topic->Subscribe(Vec3_2SubscribeCallback);
 	received_msg |= ROS2Sim_Bool_Topic->Subscribe(Bool_SubscribeCallback);
-	TSharedPtr<ROSMessages::geometry_msgs::Vector3> RobotPos(new ROSMessages::geometry_msgs::Vector3(eefJointPos));
+	TSharedPtr<ROSMessages::geometry_msgs::Vector3> RobotPos(new ROSMessages::geometry_msgs::Vector3(EEFJointPos));
 	Sim2ROS_Vec3_0_WorldPos_Topic->Publish(RobotPos);
 }
 
@@ -230,7 +218,7 @@ void AROSActor::Tick(float DeltaTime)
 	//Sim2ROS_Vec3_0_WorldPos_Topic = NewObject<UTopic>(UTopic::StaticClass());
 	//Sim2ROS_Vec3_0_WorldPos_Topic->Init(rosinst->ROSIntegrationCore, Vec3_WorldPos_Topic_Name, TEXT("geometry_msgs/Vector3"));
 	
-	TSharedPtr<ROSMessages::geometry_msgs::Vector3> RobotPos(new ROSMessages::geometry_msgs::Vector3(eefJointPos));
+	TSharedPtr<ROSMessages::geometry_msgs::Vector3> RobotPos(new ROSMessages::geometry_msgs::Vector3(EEFJointPos));
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::SanitizeFloat(RobotPos.Get()->x));
 	Sim2ROS_Vec3_0_WorldPos_Topic->Publish(RobotPos);
 	// Create a std::function callback object
