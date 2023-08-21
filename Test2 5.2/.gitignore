@@ -75,3 +75,6 @@ DerivedDataCache/*
 
 # Megascans
 Content/Megascans/*
+
+# OpenCV
+ThirdParty/OpenCV/*
