@@ -13,9 +13,9 @@ This repo host the Unreal Engine 5 part for the simulation, there is a seperate 
 ## Usage (UE5 portion)
 This is tested on a windows 11 desktop, the UE5 simulation runs in Windows, the ROS part runs in WSL with rosbridge for communications (in theory it doesn't have to be all on one computer because it uses rosbridge).
 
-1. Clone repo in file manager and navigate to `Plugin` folder inside `Test2` or `Test2 5.2`
-2. Clone [ROSIntegration repo](https://github.com/code-iai/ROSIntegration) in `Plugin` folder
-3. Add OpenCV 4.8.0 to `Test2 5.2` with this [video](https://www.youtube.com/watch?v=YOidIl2kTD0) guide
+1. Launch any empty project to add OpenCV Plugin to the Engine with this [video](https://www.youtube.com/watch?v=LX1w_etaftY) guide, close the project, go to the engine install location and find `utility.hpp` for OpenCV under `Engine/Plugins/Runtime` and fix the library collision like this [video](https://youtu.be/YOidIl2kTD0?t=301)
+2. Clone repo in file manager and navigate to `Plugin` folder inside `Test2` or `Test2 5.2`
+3. Clone [ROSIntegration repo](https://github.com/code-iai/ROSIntegration) in `Plugin` folder under the cloned repo
 4. Launch UE5.1 or UE5.2 Engine in EpicGames Launcher
 5. `Browse` and select the `Test2.uproject` (same for both Test2 and Test2 5.2) to open the project
 6. Accept the prompt to rebuild now (wait for several minutes)
