@@ -55,9 +55,7 @@ public class Test2 : ModuleRules
 			{
 				"Core", 
 				"CoreUObject", 
-				"Engine", 
-				"OpenCV", 
-				"OpenCVHelper", 
+				"Engine",
 				"InputCore",
 				"ROSIntegration",
 				"RHI",
@@ -78,10 +76,7 @@ public class Test2 : ModuleRules
 				"RenderCore",
 				"RHI",
 				"RHICore",
-				"D3D12RHI",
-				"OpenCV",
-				"OpenCVHelper"
-				
+				"D3D12RHI"
 			});
 
 		// Uncomment if you are using Slate UI

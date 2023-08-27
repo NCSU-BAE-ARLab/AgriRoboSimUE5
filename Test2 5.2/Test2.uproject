@@ -65,10 +65,6 @@
 		{
 			"Name": "ChaosVehiclesPlugin",
 			"Enabled": true
-		},
-		{
-			"Name": "OpenCV",
-			"Enabled": true
 		}
 	]
 }

@@ -5,7 +5,7 @@
 #include "ROSIntegration/Classes/RI/Topic.h"
 #include "ROSIntegration/Classes/ROSIntegrationGameInstance.h"
 #include "Engine/TextureRenderTarget2D.h"
-#include "opencv2/core.hpp"
+
 #include "ROSActor.generated.h"
 
 #define ROS2Sim_Str_Topic_STR TEXT("test_str_in")
@@ -38,6 +38,8 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 		void saveCamData(FString filePath, TArray<FString> savedData);
+	UFUNCTION(BlueprintCallable)
+		void ReadRTPixels(UTextureRenderTarget2D* SceneCaptureComp);
 	float time_accumulation = 0;
 	float reset_time = 0.1f;
 
@@ -59,6 +61,10 @@ public:
 		bool TakeData;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		UTextureRenderTarget2D *CamImage;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int ImageHeight = 1080;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int ImageWidth = 1920;
 private:
 	UPROPERTY()
 		UROSIntegrationGameInstance* rosinst;
@@ -78,4 +84,6 @@ private:
 	std::function<void(TSharedPtr<FROSBaseMsg>)> Vec3_1SubscribeCallback;
 	std::function<void(TSharedPtr<FROSBaseMsg>)> Vec3_2SubscribeCallback;
 	std::function<void(TSharedPtr<FROSBaseMsg>)> Bool_SubscribeCallback;
+	int ImageSize;
+	TArray<FColor> ImageData;
 };
