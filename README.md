@@ -26,3 +26,7 @@ This is tested on a windows 11 desktop, the UE5 simulation runs in Windows, the 
 11. To segment the plant, create a new `RenderTarget` with any color, duplicate the plant material and replace the `Albedo` with the new RenderTarget. Place and tag the plant with `SegmentImageGen` under `Actor` panel to render this inside the segmentation camera.
 12. Tag actors with `ColoredImageGen` for RGB and Depth (Scene Depth) rendering, `SegmentImageGen` for Segmentation rendering (base color, you need to post-process by remove the alpha channel from the pngs). These images will be saved under `Test2 5.2/Saved/Test` folder during simulation.
 13. The simulation can be run alone, but to control the arm and capture images, I recommend using the [ROS part of the repo](https://github.com/XingjianL/AgriRoboSim_ROS).
+
+# Images
+Point cloud reconstructed from the simulation using RGBD images and segmentation masks using 24 setpoints.
+![](./readme_images/RGBD_PointCloud_Sample.png)
