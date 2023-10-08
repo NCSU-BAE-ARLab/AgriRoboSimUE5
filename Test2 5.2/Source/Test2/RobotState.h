@@ -19,6 +19,9 @@ public:
 	URobotState();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<UPhysicsConstraintComponent*> allJoints;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<FString> prevAttach;
+	TArray<FString> nextAttach;
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
