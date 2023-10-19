@@ -26,9 +26,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ConnectToGameServer();
 	UFUNCTION(BlueprintImplementableEvent)
-	void ImplementableEvent();
+	bool MessageProcessImplementableEvent();
 	UFUNCTION(BlueprintNativeEvent)
-	void NativeEvent();
+	void CleanUpNativeEvent();
 	UPROPERTY()
 	int32 ConnectionIdGameServer;
 
@@ -42,4 +42,7 @@ public:
 	TArray<uint8> MessageBytes;
 	UPROPERTY(BlueprintReadOnly)
 	FString MessageString;
+	
+	UPROPERTY(BlueprintReadOnly)
+	TArray<float> CameraTransforms;
 };

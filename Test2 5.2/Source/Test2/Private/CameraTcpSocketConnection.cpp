@@ -33,8 +33,12 @@ void ACameraTcpSocketConnection::OnMessageReceived(int32 ConId, TArray<uint8>& M
 		{
 			MessageString.AppendChar(MessageByte);
 		}
-		ImplementableEvent();
-		NativeEvent();
+		bool clear = MessageProcessImplementableEvent();
+		if (clear)
+		{
+			CleanUpNativeEvent();
+		}
+		
 	}
 }
 
@@ -57,7 +61,7 @@ void ACameraTcpSocketConnection::ConnectToGameServer()
 	Connect(IPAddr,Port,DisconnectDelegate,ConnectDelegate,ReceivedMessageDelegate,ConnectionIdGameServer);
 }
 
-void ACameraTcpSocketConnection::NativeEvent_Implementation()
+void ACameraTcpSocketConnection::CleanUpNativeEvent_Implementation()
 {
 	UE_LOG(LogTemp, Log, TEXT("%s"), *MessageString);
 	MessageBytes.Empty();
