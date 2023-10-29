@@ -68,5 +68,33 @@ void ACameraTcpSocketConnection::CleanUpNativeEvent_Implementation()
 	MessageString.Empty();
 }
 
+float ACameraTcpSocketConnection::DecodeToFloat(TArray<uint8> Message, int start, bool reverse)
+{
+	uint32_t CombinedByte;
+	if (reverse)
+		CombinedByte = (Message[start+3] << 24) | (Message[start+2] << 16) | (Message[start+1] << 8) | (Message[start]);
+	else
+		CombinedByte = (Message[start] << 24) | (Message[start+1] << 16) | (Message[start+2] << 8) | (Message[start+3]);
+	UE_LOG(LogTemp, Warning, TEXT("%d"), CombinedByte);
+	return *reinterpret_cast<float*>(&CombinedByte);
+}
+TArray<uint8> ACameraTcpSocketConnection::DecodeToBytes(float value, bool reverse)
+{
+	const uint8_t* Bytes = reinterpret_cast<uint8_t*>(&value);
+	UE_LOG(LogTemp, Warning, TEXT("%d"), Bytes);
+	TArray<uint8> RetBytes;
+	if (reverse) {
+		RetBytes.Add(Bytes[0]);
+		RetBytes.Add(Bytes[1]);
+		RetBytes.Add(Bytes[2]);
+		RetBytes.Add(Bytes[3]);
+	} else {
+		RetBytes.Add(Bytes[3]);
+		RetBytes.Add(Bytes[2]);
+		RetBytes.Add(Bytes[1]);
+		RetBytes.Add(Bytes[0]);
+	}
+	return RetBytes;
+}
 
 

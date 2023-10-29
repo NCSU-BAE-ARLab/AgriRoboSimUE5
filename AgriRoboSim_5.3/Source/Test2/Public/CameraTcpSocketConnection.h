@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "TcpSocketConnection.h"
+#include "Algo/Reverse.h"
 #include "CameraTcpSocketConnection.generated.h"
 
 /**
@@ -42,6 +43,11 @@ public:
 	TArray<uint8> MessageBytes;
 	UPROPERTY(BlueprintReadOnly)
 	FString MessageString;
+
+	UFUNCTION(BlueprintCallable)
+	float DecodeToFloat(TArray<uint8> Message, int start, bool reverse);
+	UFUNCTION(BlueprintCallable)
+	TArray<uint8> DecodeToBytes(float value, bool reverse);
 	
 	UPROPERTY(BlueprintReadOnly)
 	TArray<float> CameraTransforms;
