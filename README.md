@@ -3,6 +3,7 @@
 This repo host the Unreal Engine 5 part for the simulation, there is a seperate [ROS repo](https://github.com/XingjianL/AgriRoboSim_ROS) that work along side this simulation. 
 
 [video demo](https://youtu.be/0kJrTDZCV2E)
+[IROS 2023 Workshop Abstract](https://sites.google.com/illinois.edu/iros2023-agrobotics/accepted-papers)
 
 `Test2` contains UE5.1 version (outdated).
 
