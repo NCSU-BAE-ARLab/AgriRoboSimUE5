@@ -48,6 +48,7 @@ public class Test2 : ModuleRules
         }*/
 	public Test2(ReadOnlyTargetRules Target) : base(Target)
 	{
+		bEnableExceptions = true;
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		//bEnableUndefinedIndentifierWarnings = false;
 		PublicDependencyModuleNames.AddRange(
