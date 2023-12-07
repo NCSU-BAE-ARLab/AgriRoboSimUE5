@@ -26,8 +26,8 @@ AROSActor::AROSActor()
 void AROSActor::BeginPlay()
 {
 	Super::BeginPlay();
-	ImageSize = ImageHeight * ImageWidth;
-	ImageData.AddUninitialized(ImageSize);
+	//ImageSize = ImageHeight * ImageWidth;
+	//ImageData.AddUninitialized(ImageSize);
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("ROS Actor Created!"));
 	UE_LOG(LogTemp, Log, TEXT("ROS Actor Created!"));
 	rosinst = Cast<UROSIntegrationGameInstance>(GetGameInstance());
@@ -166,9 +166,11 @@ void AROSActor::saveCamData(FString filePath, TArray<FString> savedData) {
 		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("Failed to Save Cam Location"));
 	}
 }
+/**
 void AROSActor::ReadRTPixels(UTextureRenderTarget2D* SceneCaptureComp)
 {
 	FTextureRenderTargetResource* RenderTargetResource = SceneCaptureComp->GameThread_GetRenderTargetResource();
 	bool bReadSuccess = RenderTargetResource->ReadPixels(ImageData);
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("%d"), bReadSuccess);
 }
+**/

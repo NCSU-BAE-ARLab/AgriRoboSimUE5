@@ -38,8 +38,8 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 		void saveCamData(FString filePath, TArray<FString> savedData);
-	UFUNCTION(BlueprintCallable)
-		void ReadRTPixels(UTextureRenderTarget2D* SceneCaptureComp);
+	//UFUNCTION(BlueprintCallable)
+	//	void ReadRTPixels(UTextureRenderTarget2D* SceneCaptureComp);
 	float time_accumulation = 0;
 	float reset_time = 0.1f;
 
