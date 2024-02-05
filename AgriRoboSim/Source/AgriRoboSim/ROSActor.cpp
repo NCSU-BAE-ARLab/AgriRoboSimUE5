@@ -152,7 +152,7 @@ void AROSActor::Tick(float DeltaTime)
 
 	TSharedPtr<ROSMessages::geometry_msgs::Vector3> RobotPos(new ROSMessages::geometry_msgs::Vector3(EEFJointPos));
 	
-	Sim2ROS_Vec3_0_WorldPos_Topic->Publish(RobotPos);
+	Sim2ROS_Vec3_0_WorldPos_Topic->Publish(RobotPos); // Publish the robot eef world position every tick
 }
 
 void AROSActor::saveCamData(FString filePath, TArray<FString> savedData) {

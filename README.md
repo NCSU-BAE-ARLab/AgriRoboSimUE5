@@ -24,9 +24,8 @@ This is tested on a windows 11 desktop, the UE5 simulation runs in Windows, the 
 8. Before fixing textures, you might want to change settings for ROS communications by editing the `ROS_UR10e` blueprint under `ur10e` folder. For specifics see [ROSIntegration](https://github.com/code-iai/ROSIntegration), but I left it to use WebSockets over localhost.
 9.  To fill the textures, go to Quixel Megascans to download some materials and plants by `Window -> Quixel Bridge` at the top of the editor. I used `Bog Marshcress` as the plant and some random materials for the room.
 10. Place the plant on the stand and open `Room_BP` to add the material to the mesh components.
-11. ~~To segment the plant, create a new `RenderTarget` with any color, duplicate the plant material and replace the `Albedo` with the new RenderTarget. Place and tag the plant with `SegmentImageGen` under `Actor` panel to render this inside the segmentation camera.~~
-12. ~~Tag actors with `ColoredImageGen` for RGB and Depth (Scene Depth) rendering, `SegmentImageGen` for Segmentation rendering (base color, you need to post-process by remove the alpha channel from the pngs). These images will be saved under `Test2 5.2/Saved/Test` folder during simulation.~~
-13. The simulation can be run alone, but to control the arm and capture images, I recommend using the [ROS part of the repo](https://github.com/XingjianL/AgriRoboSim_ROS).
+11. To segment the plant, navigate to Content/Assets/Plants and add entry in `PlantCollection_DT`, place the `BP_PlantAutoSegment` in the level and you can switch the plant by the `Change Plant` function.
+12. The simulation can be run alone, but to control the arm and capture images, I recommend using the [ROS part of the repo](https://github.com/XingjianL/AgriRoboSim_ROS).
 
 # Images
 Point cloud reconstructed from the simulation using RGBD images and segmentation masks using 24 setpoints.
