@@ -5,19 +5,22 @@
 #include "ROSIntegration/Classes/RI/Topic.h"
 #include "ROSIntegration/Classes/ROSIntegrationGameInstance.h"
 #include "Engine/TextureRenderTarget2D.h"
+#include "sensor_msgs/JointState.h"
 
 #include "ROSActor.generated.h"
-
+/**
 #define ROS2Sim_Str_Topic_STR TEXT("test_str_in")
 #define Sim2ROS_Str_Topic_STR TEXT("test_str_out")
 #define ROS2Sim_Float_Topic_STR TEXT("test_float")
 
-#define UE5_TOPIC_PREFIX std::string("/unreal")
 #define BOTTOM_JOINTS_TOPIC_ID std::string("/vec3_1")
 #define TOP_JOINTS_TOPIC_ID std::string("/vec3_2")
+**/
+
+#define UE5_TOPIC_PREFIX std::string("/unreal")
 #define WORLD_POS_TOPIC std::string("/reachedgoal")
 #define TAKE_IMAGE_TOPIC std::string("/takedata")
-
+#define JOINTS_TOPIC_ID std::string("/joint_states")
 
 UCLASS()
 
@@ -37,11 +40,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 	UFUNCTION(BlueprintCallable)
-		void saveCamData(FString filePath, TArray<FString> savedData);
+		void SaveCamData(FString FilePath, TArray<FString> SavedData);
 	//UFUNCTION(BlueprintCallable)
 	//	void ReadRTPixels(UTextureRenderTarget2D* SceneCaptureComp);
-	float time_accumulation = 0;
-	float reset_time = 0.1f;
 
 	UPROPERTY(BlueprintReadWrite)
 		bool received_msg = false;
@@ -65,25 +66,35 @@ public:
 		int ImageHeight = 1080;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		int ImageWidth = 1920;
+	// current joint positions for ros publishing
+	UPROPERTY(BlueprintReadWrite)
+		TArray<FString> UE5JointName;
+	UPROPERTY(BlueprintReadWrite)
+		TArray<double> UE5JointPosition;
+	UPROPERTY(BlueprintReadWrite)
+		TArray<double> UE5JointPositionErr;
+	// Store joint state message from call back
+	UPROPERTY(BlueprintReadWrite)
+		TArray<FString> TopicName;		// the joint name
+	UPROPERTY(BlueprintReadWrite)
+		TArray<double> TopicPosition;	// the position of the joint (rad or m),
+	UPROPERTY(BlueprintReadWrite)
+		TArray<double> TopicVelocity;	// the velocity of the joint (rad/s or m/s)
+	UPROPERTY(BlueprintReadWrite)
+		TArray<double> TopicEffort;		// the effort that is applied in the joint (Nm or N)
 private:
 	UPROPERTY()
 		UROSIntegrationGameInstance* rosinst;
 	UPROPERTY()
-		UTopic* Sim2ROS_Str_Topic;
-	UPROPERTY()
-		UTopic* ROS2Sim_Str_Topic;
-	UPROPERTY()
-		UTopic* ROS2Sim_Vec3_1_Topic;
-	UPROPERTY()
-		UTopic* ROS2Sim_Vec3_2_Topic;
-	UPROPERTY()
 		UTopic* Sim2ROS_Vec3_0_WorldPos_Topic;
 	UPROPERTY()
 		UTopic* ROS2Sim_Bool_Topic;
-	std::function<void(TSharedPtr<FROSBaseMsg>)> STRSubscribeCallback;
-	std::function<void(TSharedPtr<FROSBaseMsg>)> Vec3_1SubscribeCallback;
-	std::function<void(TSharedPtr<FROSBaseMsg>)> Vec3_2SubscribeCallback;
+	UPROPERTY()
+		UTopic* ROS2Sim_Joints_Topic;
+	UPROPERTY()
+		UTopic* Sim2ROS_Joints_Topic;
+	//UPROPERTY()
+	TSharedPtr<ROSMessages::sensor_msgs::JointState> JointPosMSG;
+	std::function<void(TSharedPtr<FROSBaseMsg>)> JointsSubscribeCallback;
 	std::function<void(TSharedPtr<FROSBaseMsg>)> Bool_SubscribeCallback;
-	int ImageSize;
-	TArray<FColor> ImageData;
 };

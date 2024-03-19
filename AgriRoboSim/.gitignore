@@ -78,3 +78,7 @@ Content/Megascans/*
 
 # OpenCV
 ThirdParty/OpenCV/*
+
+# Other Assets
+Content/GoodSky/*
+Content/Tomatos/*

@@ -15,6 +15,8 @@
 
 #include "HAL/PlatformFileManager.h"
 #include "Misc/FileHelper.h"
+#include "sensor_msgs/CameraInfo.h"
+#include "sensor_msgs/JointState.h"
 // Sets default values
 AROSActor::AROSActor()
 {
@@ -26,103 +28,63 @@ AROSActor::AROSActor()
 void AROSActor::BeginPlay()
 {
 	Super::BeginPlay();
-	//ImageSize = ImageHeight * ImageWidth;
-	//ImageData.AddUninitialized(ImageSize);
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("ROS Actor Created!"));
 	UE_LOG(LogTemp, Log, TEXT("ROS Actor Created!"));
-	rosinst = Cast<UROSIntegrationGameInstance>(GetGameInstance());
-	// Initialize a topic
-	Sim2ROS_Str_Topic = NewObject<UTopic>(UTopic::StaticClass());
-	Sim2ROS_Str_Topic->Init(rosinst->ROSIntegrationCore, Sim2ROS_Str_Topic_STR, TEXT("std_msgs/String"));
-	Sim2ROS_Str_Topic->Advertise();
-	
-	// Publish a string to the topic
-	TSharedPtr<ROSMessages::std_msgs::String> StringMessage(new ROSMessages::std_msgs::String("ROS Actor in Simulation Started"));
-	Sim2ROS_Str_Topic->Publish(StringMessage);
 
-	// Create a std::function callback object
-	std::function<void(TSharedPtr<FROSBaseMsg>)> SubscribeCallback = [](TSharedPtr<FROSBaseMsg> msg) -> void
-	{
-		auto Concrete = StaticCastSharedPtr<ROSMessages::std_msgs::String>(msg);
-		if (Concrete.IsValid())
-		{
-			UE_LOG(LogTemp, Log, TEXT("Incoming string was: %s"), (*(Concrete->_Data)));
-		}
-		return;
-	};
+	rosinst = Cast<UROSIntegrationGameInstance>(GetGameInstance());
+	
 
 	// Subscribe to the topic
-	Sim2ROS_Str_Topic->Subscribe(SubscribeCallback);
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("3"));
-
-	ROS2Sim_Str_Topic = NewObject<UTopic>(UTopic::StaticClass());
-	ROS2Sim_Str_Topic->Init(rosinst->ROSIntegrationCore, ROS2Sim_Str_Topic_STR, TEXT("std_msgs/String"));
-	ROS2Sim_Str_Topic->Advertise();
-
-	auto Vec3_1_Topic_Name = FString((UE5_TOPIC_PREFIX + std::string("/") +
-											std::to_string(ArmID) + BOTTOM_JOINTS_TOPIC_ID).c_str());
-	auto Vec3_2_Topic_Name = FString((UE5_TOPIC_PREFIX + std::string("/") +
-											std::to_string(ArmID) + TOP_JOINTS_TOPIC_ID).c_str());
-	auto Vec3_WorldPos_Topic_Name =FString((UE5_TOPIC_PREFIX + std::string("/") +
-											std::to_string(ArmID) + WORLD_POS_TOPIC).c_str());
-	auto Bool_Topic_Name = FString((UE5_TOPIC_PREFIX + std::string("/") +
-											std::to_string(ArmID) + TAKE_IMAGE_TOPIC).c_str());
-
-	ROS2Sim_Vec3_1_Topic = NewObject<UTopic>(UTopic::StaticClass());
-	ROS2Sim_Vec3_1_Topic->Init(rosinst->ROSIntegrationCore, Vec3_1_Topic_Name, TEXT("geometry_msgs/Vector3"));
-	ROS2Sim_Vec3_1_Topic->Advertise();
-
-	ROS2Sim_Vec3_2_Topic = NewObject<UTopic>(UTopic::StaticClass());
-	ROS2Sim_Vec3_2_Topic->Init(rosinst->ROSIntegrationCore, Vec3_2_Topic_Name, TEXT("geometry_msgs/Vector3"));
-	ROS2Sim_Vec3_2_Topic->Advertise();
-
+	auto const Vec3_WorldPos_Topic_Name =FString((UE5_TOPIC_PREFIX + std::string("/") +
+												std::to_string(ArmID) + WORLD_POS_TOPIC).c_str());
+	auto const Bool_Topic_Name = FString((UE5_TOPIC_PREFIX + std::string("/") +
+												std::to_string(ArmID) + TAKE_IMAGE_TOPIC).c_str());
+	auto const Sim2ROS_Joints_Topic_Name = FString((UE5_TOPIC_PREFIX + std::string("/") +
+												std::to_string(ArmID) + JOINTS_TOPIC_ID).c_str());
+	auto const ROS2Sim_Joints_Topic_Name = FString((JOINTS_TOPIC_ID).c_str());
+	// Initialize topics
 	Sim2ROS_Vec3_0_WorldPos_Topic = NewObject<UTopic>(UTopic::StaticClass());
 	Sim2ROS_Vec3_0_WorldPos_Topic->Init(rosinst->ROSIntegrationCore, Vec3_WorldPos_Topic_Name, TEXT("geometry_msgs/Vector3"));
-	
+
+	Sim2ROS_Joints_Topic = NewObject<UTopic>(UTopic::StaticClass());
+	Sim2ROS_Joints_Topic->Init(rosinst->ROSIntegrationCore, Sim2ROS_Joints_Topic_Name, TEXT("sensor_msgs/JointState"));
+
 	ROS2Sim_Bool_Topic = NewObject<UTopic>(UTopic::StaticClass());
 	ROS2Sim_Bool_Topic->Init(rosinst->ROSIntegrationCore, Bool_Topic_Name, TEXT("std_msgs/Bool"));
 	ROS2Sim_Bool_Topic->Advertise();
-	STRSubscribeCallback = [str_topic = Sim2ROS_Str_Topic, rm = &received_msg](TSharedPtr<FROSBaseMsg> msg) -> bool
-	{
-		auto Concrete = StaticCastSharedPtr<ROSMessages::std_msgs::String>(msg);
-		if (Concrete.IsValid())
-		{
-			TSharedPtr<ROSMessages::std_msgs::String> StringMessage(new ROSMessages::std_msgs::String("Sent from Sim"));
-			//str_topic->Publish(StringMessage);
-			*rm = true;
-		}
-		*rm = false;
-		return *rm;
-	};
+
+	ROS2Sim_Joints_Topic = NewObject<UTopic>(UTopic::StaticClass());
+	ROS2Sim_Joints_Topic->Init(rosinst->ROSIntegrationCore, ROS2Sim_Joints_Topic_Name, TEXT("sensor_msgs/JointState"));
+	ROS2Sim_Joints_Topic->Advertise();
+
 	// Subscribe callback to joint angles
-	// first 3 angles
-	Vec3_1SubscribeCallback = [str_topic = Sim2ROS_Str_Topic, fs = &FirstSet](TSharedPtr<FROSBaseMsg> msg) -> bool
+	JointsSubscribeCallback = [jn = &TopicName, pos = &TopicPosition, vel = &TopicVelocity, effort = &TopicEffort](TSharedPtr<FROSBaseMsg> msg) -> bool
 	{
-		auto Concrete = StaticCastSharedPtr<ROSMessages::geometry_msgs::Vector3>(msg);
+		auto Concrete = StaticCastSharedPtr<ROSMessages::sensor_msgs::JointState>(msg);
 		if (Concrete.IsValid())
 		{
-			(fs->X) = Concrete->x;
-			(fs->Y) = Concrete->y;
-			(fs->Z) = Concrete->z;
-			return true;
-		}
-		return false;
-	};
-	// second 3 angles
-	Vec3_2SubscribeCallback = [str_topic = Sim2ROS_Str_Topic, ss = &SecondSet](TSharedPtr<FROSBaseMsg> msg) -> bool
-	{
-		auto Concrete = StaticCastSharedPtr<ROSMessages::geometry_msgs::Vector3>(msg);
-		if (Concrete.IsValid())
-		{
-			(ss->X) = Concrete->x;
-			(ss->Y) = Concrete->y;
-			(ss->Z) = Concrete->z;
+			jn->Reset();
+			pos->Reset();
+			vel->Reset();
+			effort->Reset();
+			jn->Append(Concrete->name);
+			pos->Append(Concrete->position);
+			vel->Append(Concrete->velocity);
+			effort->Append(Concrete->effort);
+
+			/*pos->Add(Concrete->position[id*3]);
+			pos->Add(Concrete->position[id*3+1]);
+			pos->Add(Concrete->position[id*3+2]);
+			pos->Add(Concrete->position[id*3+3]);
+			pos->Add(Concrete->position[id*3+4]);
+			pos->Add(Concrete->position[id*3+5]);*/
+			
 			return true;
 		}
 		return false;
 	};
 	// Subscriber callback to data collection signal
-	Bool_SubscribeCallback = [str_topic = Sim2ROS_Str_Topic, take = &TakeData](TSharedPtr<FROSBaseMsg> msg) -> bool
+	Bool_SubscribeCallback = [take = &TakeData](TSharedPtr<FROSBaseMsg> msg) -> bool
 	{
 		auto Concrete = StaticCastSharedPtr<ROSMessages::std_msgs::Bool>(msg);
 		if (Concrete.IsValid())
@@ -137,11 +99,12 @@ void AROSActor::BeginPlay()
 		}
 		return false;
 	};
-	received_msg |= ROS2Sim_Str_Topic->Subscribe(STRSubscribeCallback);
-	received_msg |= ROS2Sim_Vec3_1_Topic->Subscribe(Vec3_1SubscribeCallback);
-	received_msg |= ROS2Sim_Vec3_2_Topic->Subscribe(Vec3_2SubscribeCallback);
+
+	received_msg |= ROS2Sim_Joints_Topic->Subscribe(JointsSubscribeCallback);
 	received_msg |= ROS2Sim_Bool_Topic->Subscribe(Bool_SubscribeCallback);
-	TSharedPtr<ROSMessages::geometry_msgs::Vector3> RobotPos(new ROSMessages::geometry_msgs::Vector3(EEFJointPos));
+
+	JointPosMSG = MakeShareable(new ROSMessages::sensor_msgs::JointState());
+	TSharedPtr<ROSMessages::geometry_msgs::Vector3> const RobotPos(new ROSMessages::geometry_msgs::Vector3(EEFJointPos));
 	Sim2ROS_Vec3_0_WorldPos_Topic->Publish(RobotPos);
 }
 
@@ -150,18 +113,24 @@ void AROSActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	TSharedPtr<ROSMessages::geometry_msgs::Vector3> RobotPos(new ROSMessages::geometry_msgs::Vector3(EEFJointPos));
+	TSharedPtr<ROSMessages::geometry_msgs::Vector3> const RobotPosMSG(new ROSMessages::geometry_msgs::Vector3(EEFJointPos));
+	Sim2ROS_Vec3_0_WorldPos_Topic->Publish(RobotPosMSG); // Publish the robot eef world position every tick
+
 	
-	Sim2ROS_Vec3_0_WorldPos_Topic->Publish(RobotPos); // Publish the robot eef world position every tick
+	JointPosMSG->name = UE5JointName;
+	JointPosMSG->position = UE5JointPosition;
+	JointPosMSG->velocity = UE5JointPositionErr;
+	JointPosMSG->effort = TopicPosition;
+	Sim2ROS_Joints_Topic->Publish(JointPosMSG);
 }
 
-void AROSActor::saveCamData(FString filePath, TArray<FString> savedData) {
-	FString finalString = "";
-	for (FString& Each : savedData) {
-		finalString += Each;
-		finalString += LINE_TERMINATOR;
+void AROSActor::SaveCamData(FString FilePath, TArray<FString> SavedData) {
+	FString FinalString = "";
+	for (FString& Each : SavedData) {
+		FinalString += Each;
+		FinalString += LINE_TERMINATOR;
 	}
-	if (!FFileHelper::SaveStringToFile(finalString, *filePath))
+	if (!FFileHelper::SaveStringToFile(FinalString, *FilePath))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("Failed to Save Cam Location"));
 	}
