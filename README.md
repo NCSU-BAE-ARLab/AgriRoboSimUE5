@@ -17,7 +17,9 @@ This repo host the Unreal Engine 5 part for the simulation, there is a seperate 
 
 The packaged application cannot be uploaded under Github release because it is greater than 2GB.
 
-The simplist way to use is by downloading the packaged "game" (2.8 GB after unzip) through mediafire linked below, only windows build for now: [https://www.mediafire.com/file/fq5qipsuocxgbdz/AgriculturalRobotSimulation_UE5Build.7z/file](https://www.mediafire.com/file/fq5qipsuocxgbdz/AgriculturalRobotSimulation_UE5Build.7z/file)
+The simplest way to use is by downloading the packaged "game" (2.8 GB after unzip) through Mediafire linked below, only windows build for now: [https://www.mediafire.com/file/fq5qipsuocxgbdz/AgriculturalRobotSimulation_UE5Build.7z/file](https://www.mediafire.com/file/fq5qipsuocxgbdz/AgriculturalRobotSimulation_UE5Build.7z/file)
+
+Or OneDrive link because Mediafire can be slow: [https://1drv.ms/u/s!AuM5Q-daepZAitkkKQ_B1UWMQq_jvw?e=QrW16N](https://1drv.ms/u/s!AuM5Q-daepZAitkkKQ_B1UWMQq_jvw?e=QrW16N)
 
 To control it using ROS, I recommend installing Windows Subsystem for Linux (WSL) Ubuntu 20.04. Then follow instructions of this repo for ROS packages [https://github.com/NCSU-BAE-ARLab/AgriRoboSim_ROS](https://github.com/NCSU-BAE-ARLab/AgriRoboSim_ROS).
 
