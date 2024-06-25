@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Plugins/ROSIntegration" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../AgriRoboSim/Plugins/ROSIntegration" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../Test2 5.2/Plugins/ROSIntegration" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../Test2/Plugins/ROSIntegration" vcs="Git" />
+  </component>
+</project>
