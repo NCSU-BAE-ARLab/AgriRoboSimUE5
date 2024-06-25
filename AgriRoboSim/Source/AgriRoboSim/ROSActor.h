@@ -6,7 +6,7 @@
 #include "ROSIntegration/Classes/ROSIntegrationGameInstance.h"
 #include "Engine/TextureRenderTarget2D.h"
 #include "sensor_msgs/JointState.h"
-
+#include "TextureResource.h"
 #include "ROSActor.generated.h"
 /**
 #define ROS2Sim_Str_Topic_STR TEXT("test_str_in")

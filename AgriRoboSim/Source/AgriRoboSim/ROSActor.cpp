@@ -33,7 +33,7 @@ void AROSActor::BeginPlay()
 
 	rosinst = Cast<UROSIntegrationGameInstance>(GetGameInstance());
 	
-
+	
 	// Subscribe to the topic
 	auto const Vec3_WorldPos_Topic_Name =FString((UE5_TOPIC_PREFIX + std::string("/") +
 												std::to_string(ArmID) + WORLD_POS_TOPIC).c_str());
