@@ -1,0 +1,3 @@
+[submodule "AgriRoboSim2/Plugins/ROSIntegration"]
+	path = AgriRoboSim2/Plugins/ROSIntegration
+	url = https://github.com/XingjianL/ROSIntegration.git
