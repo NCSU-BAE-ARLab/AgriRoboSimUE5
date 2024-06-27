@@ -30,19 +30,17 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-private:
-	
-	
-	
-	UPROPERTY()
-	UTopic* Sim2ROS_Bool_Topic;
-	UPROPERTY()
-	UTopic* ROS2Sim_Bool_Topic;
-	
-	std::function<void(TSharedPtr<FROSBaseMsg>)> Bool_SubscribeCallback;
-	
+	UFUNCTION(BlueprintCallable)
+	void RegisterGameInstance();
 };
 
+/**
+ * Loads the ROS array message from ROSIntegration into a TArray for use outside of callbacks
+ * 
+ * @tparam T datatype of the TArray
+ * @param ROS TArray received from message processed in ROSIntegration
+ * @param Sim UE5 TArray for message to be written into
+ */
 template <typename T>
 void UROS2NodeComponent::R2S_TArray_Helper(TArray<T> ROS, TArray<T>* Sim)
 {

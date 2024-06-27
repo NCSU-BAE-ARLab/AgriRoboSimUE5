@@ -6,9 +6,19 @@
 #include "ROS2NodeComponent.h"
 #include "ImageUtils.h"
 #include "ImageCore.h"
+#include "Camera/CameraComponent.h"
 #include "Engine/TextureRenderTarget2D.h"
 #include "sensor_msgs/Image.h"
 #include "ROSCameraControl.generated.h"
+
+UENUM(BlueprintType)
+enum class ECaptureType : uint8
+{
+	Unset,
+	ColorCapture,
+	SegmentationCapture,
+	DepthCapture
+};
 
 USTRUCT()
 struct FROSSceneCapture
@@ -18,8 +28,9 @@ struct FROSSceneCapture
 	UTopic* Topic;
 	UPROPERTY()
 	USceneCaptureComponent2D* SceneCapture;
-	
-	EPixelFormat ROSEncoding;
+	ECaptureType CaptureType;
+	//EPixelFormat ROSEncoding;
+	ETextureRenderTargetFormat RenderTargetFormat;
 	UPROPERTY()
 	TArray<FColor> ImageData8Bit;
 	TArray<FFloat16Color> ImageData16Bit;
@@ -29,15 +40,44 @@ struct FROSSceneCapture
 	FROSSceneCapture()
 		: Topic(nullptr)
 		, SceneCapture(nullptr)
-		, ROSEncoding()
+		, CaptureType(ECaptureType::Unset)
+		, RenderTargetFormat(RTF_RGBA8)
+		//, ROSEncoding()
 		, ROSStepMultiplier(-1)
 		, ImageMSG(nullptr)
 		, img(nullptr)
+		
 	{
 	}
 
+	FROSSceneCapture(
+		UTopic* Topic_,
+		USceneCaptureComponent2D* SceneCapture_,
+		ECaptureType CaptureType_
+		)
+		: ImageMSG(nullptr)
+		, img(nullptr)
+	{
+		Topic = Topic_;
+		SceneCapture = SceneCapture_;
+		CaptureType = CaptureType_;
+		switch (CaptureType)
+		{
+		case ECaptureType::ColorCapture:
+		case ECaptureType::SegmentationCapture:
+			RenderTargetFormat = RTF_RGBA8;
+			ROSStepMultiplier = 3;
+			break;
+		case ECaptureType::DepthCapture:
+			RenderTargetFormat = RTF_RGBA32f;
+			ROSStepMultiplier = 4;
+			break;
+		default:
+			break;
+		}
+	}
 	
-	void RefreshImageSize();
+	void RefreshImageTopicSize();
 	void Publish();
 	template<typename T>
 	void Publish(TArray<T>* Image);/*
@@ -50,12 +90,13 @@ struct FROSSceneCapture
 	FString CheckROSEncoding();
 	
 	void ReadRenderTargetPerRHI();
+
+	void UpdateSceneCaptureCameraParameters(UCameraComponent* Camera, UWorld* WorldContext);
 private:
 	int ROSStepMultiplier;
 	TSharedPtr<ROSMessages::sensor_msgs::Image> ImageMSG;
 	std::shared_ptr<uint8[]> img;
 };
-
 
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
@@ -65,49 +106,39 @@ class AGRIROBOSIM_API UROSCameraControl : public UROS2NodeComponent
 private:
 	UFUNCTION()
     void InitSceneCaptures();
+	UFUNCTION()
+    void InitSceneCapture(USceneCaptureComponent2D* SceneCapture, ECaptureType CaptureType);
 public:
-
 	UFUNCTION(BlueprintCallable)
-	void InitROSTopics();
+    void InitROSTopics(
+    	TMap<USceneCaptureComponent2D*, ECaptureType> CameraTypePair,
+    	UCameraComponent* CameraModel, int Width, int Height);
 	// Sets default values for this component's properties
 	UROSCameraControl();
 
 	//UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TArray<TSharedPtr<FROSSceneCapture>> SceneCaptures;
-	
 
-	UPROPERTY(BlueprintReadOnly)
-	TArray<FColor> ImageData8Bit;
-	
-	//UPROPERTY(BlueprintReadOnly)
-	TArray<FFloat16Color> ImageData16Bit;
-
-	UPROPERTY(BlueprintReadOnly)
-	TArray<FLinearColor> ImageData32Bit;
-
-	//UPROPERTY(BlueprintReadOnly)
-	FImage ImageDataUtil;
-	
 	UPROPERTY()
     UTopic* Color_Topic;
     UPROPERTY()
     UTopic* Depth_Topic;
+	UPROPERTY()
+	UTopic* Segment_Topic;
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 public:
-	UFUNCTION()
-	void PublishSceneCaptureToTopic();
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 	                           FActorComponentTickFunction* ThisTickFunction) override;
 
-	UFUNCTION(BlueprintCallable)
+	/*UFUNCTION(BlueprintCallable)
 	void ReadRenderTargetPerRHI(UTextureRenderTarget2D *RenderTarget);
 
 	UFUNCTION(BlueprintCallable)
-	void ReadRenderTargetPerUtil(UTextureRenderTarget2D *RenderTarget);
+	void ReadRenderTargetPerUtil(UTextureRenderTarget2D *RenderTarget);*/
 
 	UFUNCTION(BlueprintCallable)
 	UTextureRenderTarget2D* CreateRenderTarget(int Width, int Height, ETextureRenderTargetFormat Format = RTF_RGBA16f);
@@ -116,6 +147,10 @@ public:
 	void PublishSelectTopic(FName TopicName);
 	UFUNCTION(BlueprintCallable)
 	void PublishAllTopic();
-	
+
+	UFUNCTION(BlueprintCallable)
+	void UpdateAllCameraParameters(UCameraComponent* Camera);
+	UFUNCTION(BlueprintCallable)
+	void UpdateAllCameraSize(int Width, int Height);
 };
 

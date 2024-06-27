@@ -5,11 +5,15 @@
 
 #include "Components/SceneCaptureComponent2D.h"
 #include "Engine/TextureRenderTarget2D.h"
+#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetRenderingLibrary.h"
 
-void FROSSceneCapture::RefreshImageSize()
+/**
+ * Compute the size of the ROS topic message size
+ */
+void FROSSceneCapture::RefreshImageTopicSize()
 {
-	ROSEncoding = SceneCapture->TextureTarget->GetFormat();
+	//ROSEncoding = SceneCapture->TextureTarget->GetFormat();
 	ImageMSG = MakeShareable(new ROSMessages::sensor_msgs::Image());
 	ImageMSG->encoding = CheckROSEncoding();
 	img = std::make_shared<uint8[]>(
@@ -24,21 +28,26 @@ void FROSSceneCapture::RefreshImageSize()
 	ImageMSG->step = SceneCapture->TextureTarget->SizeX * ROSStepMultiplier;
 }
 
+/**
+ * read from current scene capture texture and publish it according to the datatype
+ */
 void FROSSceneCapture::Publish()
 {
-	switch (ROSEncoding)
+	switch (RenderTargetFormat)
 	{
-	case PF_B8G8R8A8:
-	case PF_R8G8B8A8:
-	case PF_A8R8G8B8:
+	case RTF_RGBA8:
 		ReadRenderTargetPerRHI();
 		Publish(&ImageData8Bit);
 		break;
-	case PF_FloatRGBA:
-        ReadRenderTargetPerRHI();
-        Publish(&ImageData16Bit);
+	case RTF_R16f:
+	case RTF_RG16f:
+	case RTF_RGBA16f:
+		ReadRenderTargetPerRHI();
+		Publish(&ImageData16Bit);
 		break;
-	case PF_A32B32G32R32F:
+	case RTF_R32f:
+	case RTF_RG32f:
+	case RTF_RGBA32f:
 		ReadRenderTargetPerRHI();
 		Publish(&ImageData32Bit);
 		break;
@@ -47,25 +56,29 @@ void FROSSceneCapture::Publish()
 	}
 }
 
+/**
+ * converts the ue5 TArray image to ROS image datatype then publish it over the topic
+ * @tparam T datatype for the image
+ * @param Image TArray holding the ue5 texture 
+ */
 template<typename T>
 void FROSSceneCapture::Publish(TArray<T>* Image)
 {
-	
-	//TSharedPtr<ROSMessages::sensor_msgs::Image> const ImageMSG(new ROSMessages::sensor_msgs::Image());
-	
-	
-	//uint8* img = new uint8[Image->Num()*ROSStepMultiplier];
-	//std::unique_ptr<uint8[]> img(new uint8[Image->Num() * ROSStepMultiplier]);
 	if (UpdateImageMsg(Image, img.get()))
 	{
-		UE_LOG(LogTemp, Log, TEXT("publishing, %d, %p, %d"), Image->Num(), img.get(), img.get()!=nullptr)
-
+		//UE_LOG(LogTemp, Log, TEXT("publishing, %d, %p, %d"), Image->Num(), img.get(), img.get()!=nullptr)
 		Topic->Publish(ImageMSG);
-
-		UE_LOG(LogTemp, Log, TEXT("published"))
+		//UE_LOG(LogTemp, Log, TEXT("published"))
 	}
 }
 
+/**
+ * fill the ROS buffer with UE5 TArray information based on the TArray datatype
+ * @tparam T datatype for the image
+ * @param Image UE5 image in form of TArray
+ * @param data ROS image buffer
+ * @return whether the buffer was filled
+ */
 template <typename T>
 bool FROSSceneCapture::UpdateImageMsg(TArray<T>* Image, uint8* data)
 {
@@ -121,15 +134,14 @@ bool FROSSceneCapture::UpdateImageMsg(TArray<T>* Image, uint8* data)
 	return true;
 }
 
+/**
+ * read render target texture on GPU and put it into CPU for publishing,
+ * slightly higher FPS than alternatives
+ */
 void FROSSceneCapture::ReadRenderTargetPerRHI()
 {
 	auto RenderTarget = SceneCapture->TextureTarget;
 	FTextureRenderTargetResource *RenderTargetResource = RenderTarget->GameThread_GetRenderTargetResource();
-	//UE_LOG(LogTemp, Log, TEXT("RT DIM: {%d}"), RenderTarget->bGPUSharedFlag)
-	//UE_LOG(LogTemp, Log, TEXT("Attemp Read RT: {%d}"),RenderTargetResource->GetRenderTargetTexture()->GetDesc().Format)
-	//FImage Image_Read;
-	//FImageUtils::GetRenderTargetImage(RenderTarget2D, Image_Read);
-	
 	AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask,
 		[RenderTargetResource, this, RenderTarget]()
 	{
@@ -181,20 +193,60 @@ void FROSSceneCapture::ReadRenderTargetPerRHI()
 	//FlushRenderingCommands();
 }
 
+/**
+ * update camera parameters using the Camera variable, and then filters for the actors that should be rendered
+ * based on the capture type
+ * @param Camera CameraComponent with desired parameters such as FOV, post process
+ * @param WorldContext GetWorld()
+ */
+void FROSSceneCapture::UpdateSceneCaptureCameraParameters(
+		UCameraComponent* Camera,
+		UWorld* WorldContext
+		)
+{
+	FMinimalViewInfo MinimalViewInfo;
+	Camera->GetCameraView(0.0, MinimalViewInfo);
+	SceneCapture->FOVAngle = MinimalViewInfo.FOV;
+	SceneCapture->PostProcessSettings = MinimalViewInfo.PostProcessSettings;
+	SceneCapture->PostProcessBlendWeight = MinimalViewInfo.PostProcessBlendWeight;
+	SceneCapture->PrimitiveRenderMode = ESceneCapturePrimitiveRenderMode::PRM_UseShowOnlyList;
+	TArray<AActor*> ShowOnlyActors_L;
+	switch (CaptureType)
+	{
+	case ECaptureType::ColorCapture:
+		UGameplayStatics::GetAllActorsWithTag(WorldContext, "ColoredImageGen", ShowOnlyActors_L);
+		break;
+	case ECaptureType::SegmentationCapture:
+		UGameplayStatics::GetAllActorsWithTag(WorldContext, "SegmentImageGen", ShowOnlyActors_L);
+		break;
+	case ECaptureType::DepthCapture:
+		UGameplayStatics::GetAllActorsWithTag(WorldContext, "ColoredImageGen", ShowOnlyActors_L);
+		break;
+	default:
+		break;
+	}
+	SceneCapture->ShowOnlyActors = ShowOnlyActors_L;
+}
 
+/**
+ * 
+ * @return the encoding string for the ROS Image Message
+ */
 FString FROSSceneCapture::CheckROSEncoding()
 {
-	switch (ROSEncoding)
+	switch (RenderTargetFormat)
 	{
-	case PF_B8G8R8A8:
-	case PF_R8G8B8A8:
-	case PF_A8R8G8B8:
+	case RTF_RGBA8:
 		ROSStepMultiplier = 3;
 		return "rgb8";
-	case PF_FloatRGBA:
+	case RTF_R16f:
+	case RTF_RG16f:
+	case RTF_RGBA16f:
 		ROSStepMultiplier = 2;
         return "16SC1";
-	case PF_A32B32G32R32F:
+	case RTF_R32f:
+	case RTF_RG32f:
+	case RTF_RGBA32f:
 		ROSStepMultiplier = 4;
 		return "32FC1";
 	default:
@@ -203,36 +255,24 @@ FString FROSSceneCapture::CheckROSEncoding()
 	}
 }
 
-void UROSCameraControl::InitROSTopics()
+/**
+ * All in one function for configuring this component
+ * @param CameraTypePair SceneCapture and which information to render
+ * @param CameraModel The CameraComponent with desired camera parameters (FOV, post process)
+ * @param Width image width
+ * @param Height image height
+ */
+void UROSCameraControl::InitROSTopics(
+	TMap<USceneCaptureComponent2D*, ECaptureType> CameraTypePair,
+	UCameraComponent* CameraModel, int Width, int Height)
 {
-	InitSceneCaptures();
-	for (auto Element : SceneCaptures)
+	SceneCaptures.Empty();
+	for (auto Element : CameraTypePair)
 	{
-		UE_LOG(LogTemp, Log, TEXT("Started Image Topic on: /ue5/%s/%s"),*TopicPrefix,*Element->SceneCapture->GetName())
-		if (Element->SceneCapture->GetName().Contains("Color"))
-		{
-			Color_Topic = NewObject<UTopic>(UTopic::StaticClass());
-            Color_Topic->Init(rosinst->ROSIntegrationCore, TEXT("/ue5/")+TopicPrefix+TEXT("/")+Element->SceneCapture->GetName(), TEXT("sensor_msgs/Image"));
-            Color_Topic->Advertise();
-			Element->Topic = Color_Topic;
-		}
-		if (Element->SceneCapture->GetName().Contains("Depth"))
-        {
-			Depth_Topic = NewObject<UTopic>(UTopic::StaticClass());
-			Depth_Topic->Init(rosinst->ROSIntegrationCore, TEXT("/ue5/")+TopicPrefix+TEXT("/")+Element->SceneCapture->GetName(), TEXT("sensor_msgs/Image"));
-			Depth_Topic->Advertise();
-        	Element->Topic = Depth_Topic;
-        }
-		if (Element->SceneCapture->TextureTarget)
-		{
-			UE_LOG(LogTemp, Log, TEXT("Getting Texture Target Params"))
-			Element->RefreshImageSize();
-		} else
-		{
-			UE_LOG(LogTemp, Log, TEXT("NO Texture Target"))
-		}
-		
+		InitSceneCapture(Element.Key, Element.Value);
 	}
+	UpdateAllCameraParameters(CameraModel);
+	UpdateAllCameraSize(Width, Height);
 }
 
 void UROSCameraControl::InitSceneCaptures()
@@ -240,12 +280,42 @@ void UROSCameraControl::InitSceneCaptures()
 	SceneCaptures.Empty();
 	TArray<USceneCaptureComponent2D*> L_SceneCaptures;
 	this->GetOwner()->GetComponents<USceneCaptureComponent2D>(L_SceneCaptures);
-	UE_LOG(LogTemp, Log, TEXT("Scene Capture Counts: %d"),L_SceneCaptures.Num())
 	for (int i = 0; i < L_SceneCaptures.Num(); ++i)
 	{
 		TSharedPtr<FROSSceneCapture> NewStruct = MakeShared<FROSSceneCapture>();
 		NewStruct->SceneCapture = L_SceneCaptures[i];
 		SceneCaptures.Add(NewStruct);
+	}
+}
+
+void UROSCameraControl::InitSceneCapture(USceneCaptureComponent2D* SceneCapture, ECaptureType CaptureType)
+{
+	TSharedPtr<FROSSceneCapture> NewStruct;
+	switch (CaptureType)
+	{
+	case ECaptureType::ColorCapture:
+		Color_Topic = NewObject<UTopic>(UTopic::StaticClass());
+		Color_Topic->Init(rosinst->ROSIntegrationCore, TEXT("/ue5/")+TopicPrefix+TEXT("/")+SceneCapture->GetName(), TEXT("sensor_msgs/Image"));
+		Color_Topic->Advertise();
+		NewStruct = MakeShared<FROSSceneCapture>(Color_Topic, SceneCapture, CaptureType);
+		SceneCaptures.Add(NewStruct);
+		break;
+	case ECaptureType::SegmentationCapture:
+		Segment_Topic = NewObject<UTopic>(UTopic::StaticClass());
+		Segment_Topic->Init(rosinst->ROSIntegrationCore, TEXT("/ue5/")+TopicPrefix+TEXT("/")+SceneCapture->GetName(), TEXT("sensor_msgs/Image"));
+		Segment_Topic->Advertise();
+		NewStruct = MakeShared<FROSSceneCapture>(Segment_Topic, SceneCapture, CaptureType);
+		SceneCaptures.Add(NewStruct);
+		break;
+	case ECaptureType::DepthCapture:
+		Depth_Topic = NewObject<UTopic>(UTopic::StaticClass());
+        Depth_Topic->Init(rosinst->ROSIntegrationCore, TEXT("/ue5/")+TopicPrefix+TEXT("/")+SceneCapture->GetName(), TEXT("sensor_msgs/Image"));
+        Depth_Topic->Advertise();
+		NewStruct = MakeShared<FROSSceneCapture>(Depth_Topic, SceneCapture, CaptureType);
+		SceneCaptures.Add(NewStruct);
+		break;
+	default:
+		break;
 	}
 }
 
@@ -259,7 +329,6 @@ UROSCameraControl::UROSCameraControl()
 	// ...
 }
 
-
 // Called when the game starts
 void UROSCameraControl::BeginPlay()
 {
@@ -267,11 +336,6 @@ void UROSCameraControl::BeginPlay()
 	//InitROSTopics();
 	// ...
 }
-
-void UROSCameraControl::PublishSceneCaptureToTopic()
-{
-}
-
 
 // Called every frame
 void UROSCameraControl::TickComponent(float DeltaTime, ELevelTick TickType,
@@ -282,74 +346,8 @@ void UROSCameraControl::TickComponent(float DeltaTime, ELevelTick TickType,
 	// ...
 }
 
-void UROSCameraControl::ReadRenderTargetPerRHI(UTextureRenderTarget2D* RenderTarget)
-{
-	FTextureRenderTargetResource *RenderTargetResource = RenderTarget->GameThread_GetRenderTargetResource();
-	UE_LOG(LogTemp, Log, TEXT("RT DIM: {%d}"), RenderTarget->bGPUSharedFlag)
-	UE_LOG(LogTemp, Log, TEXT("Attemp Read RT: {%d}"),RenderTargetResource->GetRenderTargetTexture()->GetDesc().Format)
-	//FImage Image_Read;
-	//FImageUtils::GetRenderTargetImage(RenderTarget2D, Image_Read);
-	
-	AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask,
-		[RenderTargetResource, this, RenderTarget]()
-	{
-		//UE_LOG(LogTemp, Log, TEXT("AsyncTask"))
-		switch (RenderTargetResource->GetRenderTargetTexture()->GetDesc().Format)
-		{
-		case PF_B8G8R8A8:
-			ENQUEUE_RENDER_COMMAND(ReadSurfaceCommand)(
-			[RenderTarget_RT = RenderTargetResource,
-				SrcRect_RT = FIntRect(0, 0, RenderTarget->SizeX, RenderTarget->SizeY),
-				OutData_RT = &ImageData8Bit,
-				Flags_RT = FReadSurfaceDataFlags(RCM_UNorm, CubeFace_MAX)]
-			(FRHICommandListImmediate& RHICmdList)
-			{
-				RHICmdList.ReadSurfaceData(RenderTarget_RT->GetShaderResourceTexture(), SrcRect_RT, *OutData_RT, Flags_RT);
-			});
-			//RenderTargetResource->ReadPixels(this->ImageData8Bit);
-			UE_LOG(LogTemp, Log, TEXT("RT READ: {%d}"), this->ImageData8Bit.Num())
-			break;
-		case PF_FloatRGBA:
-			//RenderTargetResource->ReadFloat16Pixels(this->ImageData16Bit);
-			ENQUEUE_RENDER_COMMAND(ReadSurfaceCommand)(
-			[RenderTarget_RT = RenderTargetResource,
-				SrcRect_RT = FIntRect(0, 0, RenderTarget->SizeX, RenderTarget->SizeY),
-				OutData_RT = &ImageData16Bit,
-				Flags_RT = FReadSurfaceDataFlags(RCM_MinMax, CubeFace_MAX)]
-			(FRHICommandListImmediate& RHICmdList)
-			{
-				RHICmdList.ReadSurfaceFloatData(RenderTarget_RT->GetShaderResourceTexture(), SrcRect_RT, *OutData_RT, Flags_RT);
-			});
-			//UE_LOG(LogTemp, Log, TEXT("RT READ: {%d}"), this->ImageData16Bit.Num())
-			break;
-		case PF_A32B32G32R32F:
-			ENQUEUE_RENDER_COMMAND(ReadSurfaceCommand)(
-			[RenderTarget_RT = RenderTargetResource,
-				SrcRect_RT = FIntRect(0, 0, RenderTarget->SizeX, RenderTarget->SizeY),
-				OutData_RT = &ImageData32Bit,
-				Flags_RT = FReadSurfaceDataFlags(RCM_MinMax, CubeFace_MAX)]
-			(FRHICommandListImmediate& RHICmdList)
-			{
-				RHICmdList.ReadSurfaceData(RenderTarget_RT->GetShaderResourceTexture(), SrcRect_RT, *OutData_RT, Flags_RT);
-			});
-			//RenderTargetResource->ReadLinearColorPixels(this->ImageData32Bit);
-			//UE_LOG(LogTemp, Log, TEXT("RT READ: {%d}"), this->ImageData32Bit.Num())
-			break;
-		default:
-			UE_LOG(LogTemp, Warning, TEXT("NO RT READ: unclear pixel format"))
-		}
-			
-	});
-	FlushRenderingCommands();
-}
-
-void UROSCameraControl::ReadRenderTargetPerUtil(UTextureRenderTarget2D* RenderTarget)
-{
-	FImageUtils::GetRenderTargetImage(RenderTarget, ImageDataUtil);
-	UE_LOG(LogTemp, Log, TEXT("%lld, %lld"), ImageDataUtil.GetWidth(), ImageDataUtil.GetHeight())
-}
-
-UTextureRenderTarget2D* UROSCameraControl::CreateRenderTarget(int Width, int Height, ETextureRenderTargetFormat Format)
+UTextureRenderTarget2D* UROSCameraControl::CreateRenderTarget(
+	int Width, int Height, ETextureRenderTargetFormat Format)
 {
 	UTextureRenderTarget2D* NewRenderTarget2D = NewObject<UTextureRenderTarget2D>();
 	check(NewRenderTarget2D);
@@ -373,9 +371,34 @@ void UROSCameraControl::PublishAllTopic()
 {
 	for (auto SceneCapture : SceneCaptures)
 	{
-		//ReadRenderTargetPerRHI(SceneCapture->SceneCapture->TextureTarget);
 		SceneCapture->Publish();
-		//SceneCapture->Publish();
 	}
 }
+
+void UROSCameraControl::UpdateAllCameraParameters(UCameraComponent* Camera)
+{
+	for (auto SceneCapture: SceneCaptures)
+	{
+		SceneCapture->UpdateSceneCaptureCameraParameters(Camera, GetWorld());
+	}
+}
+
+void UROSCameraControl::UpdateAllCameraSize(int Width, int Height)
+{
+	for (auto Element : SceneCaptures)
+	{
+		Element->SceneCapture->TextureTarget = CreateRenderTarget(Width, Height, Element->RenderTargetFormat);
+		if (Element->SceneCapture->TextureTarget)
+		{
+			UE_LOG(LogTemp, Log, TEXT("Getting Texture Target Params"))
+			Element->RefreshImageTopicSize();
+		} else
+		{
+			UE_LOG(LogTemp, Log, TEXT("NO Texture Target"))
+		}
+		
+	}
+}
+
+
 
