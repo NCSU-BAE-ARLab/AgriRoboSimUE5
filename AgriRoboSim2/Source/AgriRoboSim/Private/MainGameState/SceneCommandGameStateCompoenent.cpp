@@ -31,6 +31,7 @@ TMap<FString, FString> USceneCommandGameStateCompoenent::ReadEntryPairsFromLastM
 	if (game_command.Len() > 1)
 	{
 		TArray<FString> cmds;
+		//UE_LOG(LogTemp, Log, TEXT("%s"), *game_command);
 		game_command.ParseIntoArray(cmds, TEXT(":"),false);
 		GEngine->AddOnScreenDebugMessage(5,30.0f,FColor::Yellow,TEXT("Process Game Cmd"));
 		if (cmds.Num() > 0 && cmds.Num() % 2 == 0)
@@ -42,7 +43,12 @@ TMap<FString, FString> USceneCommandGameStateCompoenent::ReadEntryPairsFromLastM
 		}
 		else
 		{
-			GEngine->AddOnScreenDebugMessage(6,30.0f,FColor::Red,TEXT("Incorrect Game Cmd Format"));
+		GEngine->AddOnScreenDebugMessage(
+			6, 
+			30.0f, 
+			FColor::Red, 
+			FString::Printf(TEXT("Incorrect Game Cmd Format: %d"), cmds.Num())
+		);
 			// unexpected command packet
 		}
 		game_command = FString("");
@@ -50,7 +56,15 @@ TMap<FString, FString> USceneCommandGameStateCompoenent::ReadEntryPairsFromLastM
 	
 	return result;
 }
-
+void USceneCommandGameStateCompoenent::SendGameResponse(FString& ResponseMSG)
+{
+	if (GameResponseTopic)
+	{
+		GameResponseMSG = MakeShareable(new ROSMessages::std_msgs::String());
+		GameResponseMSG->_Data = ResponseMSG;
+		GameResponseTopic->Publish(GameResponseMSG);
+	}
+}
 // Called when the game starts
 void USceneCommandGameStateCompoenent::BeginPlay()
 {
@@ -71,6 +85,10 @@ void USceneCommandGameStateCompoenent::BeginPlay()
 		}
 	};
 	GameCommandTopic->Subscribe(GameCommand_SubscribeCallback);
+
+	GameResponseTopic = NewObject<UTopic>(UTopic::StaticClass());
+	GameResponseTopic->Init(rosinst->ROSIntegrationCore, TEXT("/ue5/game_response"), TEXT("std_msgs/String"));
+	GameResponseTopic->Advertise();
 }
 
 

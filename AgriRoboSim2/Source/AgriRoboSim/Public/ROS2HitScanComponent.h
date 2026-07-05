@@ -11,7 +11,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class AGRIROBOSIM_API UROS2HitScanComponent : public UROS2NodeComponent
 {
 	GENERATED_BODY()
@@ -21,9 +21,12 @@ class AGRIROBOSIM_API UROS2HitScanComponent : public UROS2NodeComponent
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TArray<FVector> TargetLocations;
 	TArray<FVector> TargetImagePos;
-
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool Check;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	FString ReturnMessage;
 	UFUNCTION(BlueprintCallable)
-	void PublishHitScan();
+	void PublishHitScan(const FString& data);
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

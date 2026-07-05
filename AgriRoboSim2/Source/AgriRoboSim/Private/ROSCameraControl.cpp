@@ -110,15 +110,15 @@ UTextureRenderTarget2D* UROSCameraControl::CreateRenderTarget(
 {
 	UTextureRenderTarget2D* NewRenderTarget2D = NewObject<UTextureRenderTarget2D>();
 	check(NewRenderTarget2D);
+	//NewRenderTarget2D->InitCustomFormat(Width,Height,GetPixelFormatFromRenderTargetFormat(Format),false);
 	NewRenderTarget2D->RenderTargetFormat = Format;
-	NewRenderTarget2D->ClearColor = FLinearColor();
+	NewRenderTarget2D->ClearColor = FColor();
 	NewRenderTarget2D->bAutoGenerateMips = false;
-	NewRenderTarget2D->bCanCreateUAV = true;
+	NewRenderTarget2D->bCanCreateUAV = false;//true;
 	NewRenderTarget2D->InitAutoFormat(Width, Height);
-	
-	NewRenderTarget2D->SRGB = false;
+	NewRenderTarget2D->SRGB = true;
 	NewRenderTarget2D->bGPUSharedFlag = true;
-	NewRenderTarget2D->TargetGamma = 2.2;
+	NewRenderTarget2D->TargetGamma = 0.0;//2.2;
 	NewRenderTarget2D->UpdateResourceImmediate(true);
 	return NewRenderTarget2D; 
 }
@@ -130,7 +130,12 @@ void UROSCameraControl::PublishAllTopic()
 {
 	for (auto SceneCapture : SceneCaptures)
 	{
+		if (SceneCapture->is_publishing) {return;}
 		//UE_LOG(LogTemp, Log, TEXT("Publishing: %s, %s"), *SceneCapture->SceneCapture->GetName(),*SceneCapture->Topic->GetTopicName())
+		
+	}
+	for (auto SceneCapture : SceneCaptures)
+	{
 		SceneCapture->Publish();
 	}
 }
@@ -140,6 +145,22 @@ void UROSCameraControl::UpdateAllCameraParameters(UCameraComponent* Camera)
 	for (auto SceneCapture: SceneCaptures)
 	{
 		SceneCapture->UpdateSceneCaptureCameraParameters(Camera, GetWorld());
+	}
+}
+
+void UROSCameraControl::SetCameraMode(EROSCameraMode Mode)
+{
+	for (auto SceneCapture: SceneCaptures)
+	{
+		switch (Mode)
+		{
+			case EROSCameraMode::Streaming:
+				SceneCapture->is_streaming = true;
+				break;
+			case EROSCameraMode::Block:
+				SceneCapture->is_streaming = false;
+				break;
+		}
 	}
 }
 
@@ -157,6 +178,20 @@ void UROSCameraControl::UpdateAllCameraSize(int Width, int Height)
 			UE_LOG(LogTemp, Log, TEXT("NO Texture Target"))
 		}
 		
+	}
+}
+
+void UROSCameraControl::UpdateFrameIDSources(TArray<AActor*> FrameIDSources)
+{
+	for (auto Element : SceneCaptures)
+	{
+		if (Element && Element->SceneCapture && Element->SceneCapture->TextureTarget)
+    	{
+			Element->IDSources = FrameIDSources;
+			//Element->UpdateFrameID();
+			//UKismetRenderingLibrary::ClearRenderTarget2D(this, Element->SceneCapture->TextureTarget, FLinearColor::Transparent);
+
+		}
 	}
 }
 

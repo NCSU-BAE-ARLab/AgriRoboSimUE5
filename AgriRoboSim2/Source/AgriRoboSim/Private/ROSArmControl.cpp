@@ -147,7 +147,7 @@ void UROSArmControl::SetJointsTargets()
 	for (int ue5_ind = 0; ue5_ind < JointNames_ROS.Num(); ue5_ind++)
 	{
 		int ros_ind = RJointNames.Find(JointNames_ROS[ue5_ind]);
-		UE_LOG(LogTemp, Log, TEXT("%d number joints, %d"), RJointNames.Num(), JointNames_ROS.Num())
+		//UE_LOG(LogTemp, Log, TEXT("%d number joints, %d"), RJointNames.Num(), JointNames_ROS.Num())
 		// the joint name is found in the topic message
 		if (ros_ind == INDEX_NONE)
 		{
@@ -180,11 +180,26 @@ void UROSArmControl::PubRobotState()
 	ROSMessages::geometry_msgs::TransformStamped base_transform;
 	FVector base_transforms_loc = FVector(0, 0, 0);
 	FQuat base_transforms_rot = FQuat(0, 0, 0, 1);
-	RobotArm->GetSocketWorldLocationAndRotation("base_socket", base_transforms_loc, base_transforms_rot);
-
+	if (RobotArm->DoesSocketExist("camera_socket")) // check socket existence
+	{
+		RobotArm->GetSocketWorldLocationAndRotation("base_socket", base_transforms_loc, base_transforms_rot);
+	}
+	else
+	{
+		base_transforms_loc = RobotArm->GetComponentLocation();
+		base_transforms_rot = RobotArm->GetComponentQuat();
+	}
 	FVector cam_transforms_loc = FVector(0, 0, 0);
 	FQuat cam_transforms_rot = FQuat(0, 0, 0, 1);
-	RobotArm->GetSocketWorldLocationAndRotation("camera_socket", cam_transforms_loc, cam_transforms_rot);
+	if (RobotArm->DoesSocketExist("camera_socket"))
+	{
+		RobotArm->GetSocketWorldLocationAndRotation("camera_socket", cam_transforms_loc, cam_transforms_rot);
+	}
+	else
+	{
+		cam_transforms_loc = RobotArm->GetComponentLocation();
+		cam_transforms_rot = RobotArm->GetComponentQuat();
+	}
 	//robot_state_msg->transforms.Reset();
 	robot_state_msg->transforms.Init(base_transform,2);
 	robot_state_msg->transforms[0].header.frame_id = "base_link";

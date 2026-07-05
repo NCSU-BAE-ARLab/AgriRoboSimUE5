@@ -6,16 +6,16 @@
 		},
 		{
 			"name": "UE5",
-			"path": "E:\\game\\UE_5.6"
+			"path": "C:\\Program Files\\Epic Games\\UE_5.6"
 		}
 	],
 	"settings": {
 		"typescript.tsc.autoDetect": "off",
 		"npm.autoDetect": "off",
 		"terminal.integrated.env.windows": {
-			"PATH": "E:\\game\\UE_5.6\\Engine\\Binaries\\ThirdParty\\DotNet\\8.0.300\\win-x64;${env:PATH}",
-			"DOTNET_ROOT": "E:\\game\\UE_5.6\\Engine\\Binaries\\ThirdParty\\DotNet\\8.0.300\\win-x64",
-			"DOTNET_HOST_PATH": "E:\\game\\UE_5.6\\Engine\\Binaries\\ThirdParty\\DotNet\\8.0.300\\win-x64\\dotnet.exe",
+			"PATH": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Binaries\\ThirdParty\\DotNet\\8.0.300\\win-x64;${env:PATH}",
+			"DOTNET_ROOT": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Binaries\\ThirdParty\\DotNet\\8.0.300\\win-x64",
+			"DOTNET_HOST_PATH": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Binaries\\ThirdParty\\DotNet\\8.0.300\\win-x64\\dotnet.exe",
 			"DOTNET_MULTILEVEL_LOOKUP": "0",
 			"DOTNET_ROLL_FORWARD": "LatestMajor"
 		}
@@ -37,13 +37,13 @@
 					"AgriRoboSim",
 					"Win64",
 					"Debug",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -54,7 +54,7 @@
 					"AgriRoboSim",
 					"Win64",
 					"Debug",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -63,7 +63,7 @@
 				],
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -74,13 +74,13 @@
 					"AgriRoboSim",
 					"Win64",
 					"Debug",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -91,13 +91,13 @@
 					"AgriRoboSim",
 					"Win64",
 					"DebugGame",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -108,7 +108,7 @@
 					"AgriRoboSim",
 					"Win64",
 					"DebugGame",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -117,7 +117,7 @@
 				],
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -128,13 +128,13 @@
 					"AgriRoboSim",
 					"Win64",
 					"DebugGame",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -145,13 +145,13 @@
 					"AgriRoboSim",
 					"Win64",
 					"Development",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -162,7 +162,7 @@
 					"AgriRoboSim",
 					"Win64",
 					"Development",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -171,7 +171,7 @@
 				],
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -182,13 +182,13 @@
 					"AgriRoboSim",
 					"Win64",
 					"Development",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -199,13 +199,13 @@
 					"AgriRoboSim",
 					"Win64",
 					"Test",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -216,7 +216,7 @@
 					"AgriRoboSim",
 					"Win64",
 					"Test",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -225,7 +225,7 @@
 				],
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -236,13 +236,13 @@
 					"AgriRoboSim",
 					"Win64",
 					"Test",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -253,13 +253,13 @@
 					"AgriRoboSim",
 					"Win64",
 					"Shipping",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -270,7 +270,7 @@
 					"AgriRoboSim",
 					"Win64",
 					"Shipping",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -279,7 +279,7 @@
 				],
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -290,13 +290,13 @@
 					"AgriRoboSim",
 					"Win64",
 					"Shipping",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -307,13 +307,13 @@
 					"AgriRoboSimEditor",
 					"Win64",
 					"Debug",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -324,7 +324,7 @@
 					"AgriRoboSimEditor",
 					"Win64",
 					"Debug",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -333,7 +333,7 @@
 				],
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -344,13 +344,13 @@
 					"AgriRoboSimEditor",
 					"Win64",
 					"Debug",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -361,13 +361,13 @@
 					"AgriRoboSimEditor",
 					"Win64",
 					"DebugGame",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -378,7 +378,7 @@
 					"AgriRoboSimEditor",
 					"Win64",
 					"DebugGame",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -387,7 +387,7 @@
 				],
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -398,13 +398,13 @@
 					"AgriRoboSimEditor",
 					"Win64",
 					"DebugGame",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -415,13 +415,13 @@
 					"AgriRoboSimEditor",
 					"Win64",
 					"Development",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -432,7 +432,7 @@
 					"AgriRoboSimEditor",
 					"Win64",
 					"Development",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -441,7 +441,7 @@
 				],
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -452,13 +452,13 @@
 					"AgriRoboSimEditor",
 					"Win64",
 					"Development",
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
 				"type": "shell",
 				"options": {
-					"cwd": "E:\\game\\UE_5.6"
+					"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			}
 		]
@@ -469,148 +469,148 @@
 			{
 				"name": "Launch AgriRoboSim (Debug)",
 				"request": "launch",
-				"program": "E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\Binaries\\Win64\\UnrealGame-Win64-Debug.exe",
+				"program": "C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\Binaries\\Win64\\UnrealGame-Win64-Debug.exe",
 				"preLaunchTask": "AgriRoboSim Win64 Debug Build",
 				"args": [
 				],
-				"cwd": "E:\\game\\UE_5.6",
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.6",
 				"stopAtEntry": false,
 				"console": "integratedTerminal",
 				"type": "cppvsdbg",
-				"visualizerFile": "E:\\game\\UE_5.6\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"visualizerFile": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 				"sourceFileMap": {
-					"D:\\build\\++UE5\\Sync": "E:\\game\\UE_5.6",
-					"Z:\\UEVFS\\AgriRoboSim2": "E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2",
-					"Z:\\UEVFS\\Root": "E:\\game\\UE_5.6"
+					"D:\\build\\++UE5\\Sync": "C:\\Program Files\\Epic Games\\UE_5.6",
+					"Z:\\UEVFS\\AgriRoboSim2": "C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2",
+					"Z:\\UEVFS\\Root": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
 				"name": "Launch AgriRoboSim (DebugGame)",
 				"request": "launch",
-				"program": "E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\Binaries\\Win64\\UnrealGame-Win64-DebugGame.exe",
+				"program": "C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\Binaries\\Win64\\UnrealGame-Win64-DebugGame.exe",
 				"preLaunchTask": "AgriRoboSim Win64 DebugGame Build",
 				"args": [
 				],
-				"cwd": "E:\\game\\UE_5.6",
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.6",
 				"stopAtEntry": false,
 				"console": "integratedTerminal",
 				"type": "cppvsdbg",
-				"visualizerFile": "E:\\game\\UE_5.6\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"visualizerFile": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 				"sourceFileMap": {
-					"D:\\build\\++UE5\\Sync": "E:\\game\\UE_5.6",
-					"Z:\\UEVFS\\AgriRoboSim2": "E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2",
-					"Z:\\UEVFS\\Root": "E:\\game\\UE_5.6"
+					"D:\\build\\++UE5\\Sync": "C:\\Program Files\\Epic Games\\UE_5.6",
+					"Z:\\UEVFS\\AgriRoboSim2": "C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2",
+					"Z:\\UEVFS\\Root": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
 				"name": "Launch AgriRoboSim (Development)",
 				"request": "launch",
-				"program": "E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\Binaries\\Win64\\UnrealGame.exe",
+				"program": "C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\Binaries\\Win64\\UnrealGame.exe",
 				"preLaunchTask": "AgriRoboSim Win64 Development Build",
 				"args": [
 				],
-				"cwd": "E:\\game\\UE_5.6",
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.6",
 				"stopAtEntry": false,
 				"console": "integratedTerminal",
 				"type": "cppvsdbg",
-				"visualizerFile": "E:\\game\\UE_5.6\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"visualizerFile": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 				"sourceFileMap": {
-					"D:\\build\\++UE5\\Sync": "E:\\game\\UE_5.6",
-					"Z:\\UEVFS\\AgriRoboSim2": "E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2",
-					"Z:\\UEVFS\\Root": "E:\\game\\UE_5.6"
+					"D:\\build\\++UE5\\Sync": "C:\\Program Files\\Epic Games\\UE_5.6",
+					"Z:\\UEVFS\\AgriRoboSim2": "C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2",
+					"Z:\\UEVFS\\Root": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
 				"name": "Launch AgriRoboSim (Test)",
 				"request": "launch",
-				"program": "E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\Binaries\\Win64\\UnrealGame-Win64-Test.exe",
+				"program": "C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\Binaries\\Win64\\UnrealGame-Win64-Test.exe",
 				"preLaunchTask": "AgriRoboSim Win64 Test Build",
 				"args": [
 				],
-				"cwd": "E:\\game\\UE_5.6",
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.6",
 				"stopAtEntry": false,
 				"console": "integratedTerminal",
 				"type": "cppvsdbg",
-				"visualizerFile": "E:\\game\\UE_5.6\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"visualizerFile": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 				"sourceFileMap": {
-					"D:\\build\\++UE5\\Sync": "E:\\game\\UE_5.6",
-					"Z:\\UEVFS\\AgriRoboSim2": "E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2",
-					"Z:\\UEVFS\\Root": "E:\\game\\UE_5.6"
+					"D:\\build\\++UE5\\Sync": "C:\\Program Files\\Epic Games\\UE_5.6",
+					"Z:\\UEVFS\\AgriRoboSim2": "C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2",
+					"Z:\\UEVFS\\Root": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
 				"name": "Launch AgriRoboSim (Shipping)",
 				"request": "launch",
-				"program": "E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\Binaries\\Win64\\UnrealGame-Win64-Shipping.exe",
+				"program": "C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\Binaries\\Win64\\UnrealGame-Win64-Shipping.exe",
 				"preLaunchTask": "AgriRoboSim Win64 Shipping Build",
 				"args": [
 				],
-				"cwd": "E:\\game\\UE_5.6",
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.6",
 				"stopAtEntry": false,
 				"console": "integratedTerminal",
 				"type": "cppvsdbg",
-				"visualizerFile": "E:\\game\\UE_5.6\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"visualizerFile": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 				"sourceFileMap": {
-					"D:\\build\\++UE5\\Sync": "E:\\game\\UE_5.6",
-					"Z:\\UEVFS\\AgriRoboSim2": "E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2",
-					"Z:\\UEVFS\\Root": "E:\\game\\UE_5.6"
+					"D:\\build\\++UE5\\Sync": "C:\\Program Files\\Epic Games\\UE_5.6",
+					"Z:\\UEVFS\\AgriRoboSim2": "C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2",
+					"Z:\\UEVFS\\Root": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
 				"name": "Launch AgriRoboSimEditor (Debug)",
 				"request": "launch",
-				"program": "E:\\game\\UE_5.6\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-Debug.exe",
+				"program": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-Debug.exe",
 				"preLaunchTask": "AgriRoboSimEditor Win64 Debug Build",
 				"args": [
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject"
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject"
 				],
-				"cwd": "E:\\game\\UE_5.6",
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.6",
 				"stopAtEntry": false,
 				"console": "integratedTerminal",
 				"type": "cppvsdbg",
-				"visualizerFile": "E:\\game\\UE_5.6\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"visualizerFile": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 				"sourceFileMap": {
-					"D:\\build\\++UE5\\Sync": "E:\\game\\UE_5.6",
-					"Z:\\UEVFS\\AgriRoboSim2": "E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2",
-					"Z:\\UEVFS\\Root": "E:\\game\\UE_5.6"
+					"D:\\build\\++UE5\\Sync": "C:\\Program Files\\Epic Games\\UE_5.6",
+					"Z:\\UEVFS\\AgriRoboSim2": "C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2",
+					"Z:\\UEVFS\\Root": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
 				"name": "Launch AgriRoboSimEditor (DebugGame)",
 				"request": "launch",
-				"program": "E:\\game\\UE_5.6\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-DebugGame.exe",
+				"program": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-DebugGame.exe",
 				"preLaunchTask": "AgriRoboSimEditor Win64 DebugGame Build",
 				"args": [
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject"
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject"
 				],
-				"cwd": "E:\\game\\UE_5.6",
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.6",
 				"stopAtEntry": false,
 				"console": "integratedTerminal",
 				"type": "cppvsdbg",
-				"visualizerFile": "E:\\game\\UE_5.6\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"visualizerFile": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 				"sourceFileMap": {
-					"D:\\build\\++UE5\\Sync": "E:\\game\\UE_5.6",
-					"Z:\\UEVFS\\AgriRoboSim2": "E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2",
-					"Z:\\UEVFS\\Root": "E:\\game\\UE_5.6"
+					"D:\\build\\++UE5\\Sync": "C:\\Program Files\\Epic Games\\UE_5.6",
+					"Z:\\UEVFS\\AgriRoboSim2": "C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2",
+					"Z:\\UEVFS\\Root": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
 				"name": "Launch AgriRoboSimEditor (Development)",
 				"request": "launch",
-				"program": "E:\\game\\UE_5.6\\Engine\\Binaries\\Win64\\UnrealEditor.exe",
+				"program": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Binaries\\Win64\\UnrealEditor.exe",
 				"preLaunchTask": "AgriRoboSimEditor Win64 Development Build",
 				"args": [
-					"E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject"
+					"C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject"
 				],
-				"cwd": "E:\\game\\UE_5.6",
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.6",
 				"stopAtEntry": false,
 				"console": "integratedTerminal",
 				"type": "cppvsdbg",
-				"visualizerFile": "E:\\game\\UE_5.6\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+				"visualizerFile": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 				"sourceFileMap": {
-					"D:\\build\\++UE5\\Sync": "E:\\game\\UE_5.6",
-					"Z:\\UEVFS\\AgriRoboSim2": "E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2",
-					"Z:\\UEVFS\\Root": "E:\\game\\UE_5.6"
+					"D:\\build\\++UE5\\Sync": "C:\\Program Files\\Epic Games\\UE_5.6",
+					"Z:\\UEVFS\\AgriRoboSim2": "C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2",
+					"Z:\\UEVFS\\Root": "C:\\Program Files\\Epic Games\\UE_5.6"
 				}
 			},
 			{
@@ -618,25 +618,25 @@
 				"type": "coreclr",
 				"request": "launch",
 				"preLaunchTask": "UnrealBuildTool Win64 Development Build",
-				"program": "E:\\game\\UE_5.6\\Engine\\Build\\BatchFiles\\RunUBT.bat",
+				"program": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Build\\BatchFiles\\RunUBT.bat",
 				"args": [
 					"-projectfiles",
 					"-vscode",
-					"-project=E:\\UnrealProjects\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
+					"-project=C:\\Users\\xl2295\\Documents\\Unreal Projects\\AgriRoboSim\\AgriRoboSimUE5\\AgriRoboSim2\\AgriRoboSim2.uproject",
 					"-game",
 					"-engine",
 					"-dotnet"
 				],
 				"env": {
-					"PATH": "E:\\game\\UE_5.6\\Engine\\Binaries\\ThirdParty\\DotNet\\8.0.300\\win-x64;${env:PATH}",
-					"DOTNET_ROOT": "E:\\game\\UE_5.6\\Engine\\Binaries\\ThirdParty\\DotNet\\8.0.300\\win-x64",
-					"DOTNET_HOST_PATH": "E:\\game\\UE_5.6\\Engine\\Binaries\\ThirdParty\\DotNet\\8.0.300\\win-x64\\dotnet.exe",
+					"PATH": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Binaries\\ThirdParty\\DotNet\\8.0.300\\win-x64;${env:PATH}",
+					"DOTNET_ROOT": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Binaries\\ThirdParty\\DotNet\\8.0.300\\win-x64",
+					"DOTNET_HOST_PATH": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Binaries\\ThirdParty\\DotNet\\8.0.300\\win-x64\\dotnet.exe",
 					"DOTNET_MULTILEVEL_LOOKUP": "0",
 					"DOTNET_ROLL_FORWARD": "LatestMajor"
 				},
 				"console": "integratedTerminal",
 				"stopAtEntry": false,
-				"cwd": "E:\\game\\UE_5.6"
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.6"
 			}
 		]
 	}

@@ -52,20 +52,23 @@ public class AgriRoboSim : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		//bEnableUndefinedIndentifierWarnings = false;
 		PublicDependencyModuleNames.AddRange(
-	new string[] 
+	new string[]
 			{
-				"Core", 
-				"CoreUObject", 
+				"Core",
+				"CoreUObject",
 				"Engine",
 				"InputCore",
 				"ROSIntegration",
 				"RHI",
-				"RHICore", 
+				"RHICore",
 				"RenderCore",
 				"HeadMountedDisplay",
 				"Media",
 				"MediaAssets",
-				"WebSockets"
+				"WebSockets",
+				"ProceduralMeshComponent",
+				"GeometryCore",
+				"GeometryFramework"
 			});
 		PrivateDependencyModuleNames.AddRange(
 	new string[]
@@ -79,7 +82,10 @@ public class AgriRoboSim : ModuleRules
 				"RHI",
 				"RHICore",
 				"D3D12RHI",
-				"WebSockets"
+				"WebSockets",
+				"ProceduralMeshComponent",
+				"GeometryCore",
+				"GeometryFramework"
 			});
 
 		// Uncomment if you are using Slate UI

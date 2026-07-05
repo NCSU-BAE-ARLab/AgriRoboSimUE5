@@ -80,10 +80,6 @@
 			"Enabled": true
 		},
 		{
-			"Name": "PixelStreaming",
-			"Enabled": true
-		},
-		{
 			"Name": "SkeletalMeshModelingTools",
 			"Enabled": true
 		},
@@ -105,9 +101,13 @@
 			"SupportedTargetPlatforms": [
 				"Win64",
 				"Linux",
-				"Android",
-				"VisionOS"
+				"LinuxArm64",
+				"Android"
 			]
+		},
+		{
+			"Name": "PixelStreaming",
+			"Enabled": true
 		}
 	],
 	"TargetPlatforms": [

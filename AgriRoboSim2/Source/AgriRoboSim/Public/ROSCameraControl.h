@@ -13,7 +13,11 @@
 #include "ROSCameraControl.generated.h"
 
 
-
+UENUM(BlueprintType)
+enum class EROSCameraMode : uint8 {
+     Streaming = 0 UMETA(DisplayName = "ROS Stream Images"),
+     Block = 1  UMETA(DisplayName = "ROS Block and Publish Images")
+};
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class AGRIROBOSIM_API UROSCameraControl : public UROS2NodeComponent
 {
@@ -67,6 +71,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void UpdateAllCameraParameters(UCameraComponent* Camera);
 	UFUNCTION(BlueprintCallable)
+	void SetCameraMode(EROSCameraMode Mode);
+	UFUNCTION(BlueprintCallable)
 	void UpdateAllCameraSize(int Width, int Height);
+	UFUNCTION(BlueprintCallable)
+	void UpdateFrameIDSources(TArray<AActor*> FrameIDSources);
 };
 

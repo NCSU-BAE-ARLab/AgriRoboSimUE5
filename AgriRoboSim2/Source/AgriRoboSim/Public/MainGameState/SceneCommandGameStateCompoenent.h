@@ -27,6 +27,12 @@ public:
     UPROPERTY(BlueprintReadWrite)
 	FString game_command;
 
+	UPROPERTY()
+	UTopic* GameResponseTopic;
+	TSharedPtr<ROSMessages::std_msgs::String> GameResponseMSG;
+	
+	UFUNCTION(BlueprintCallable)
+	void SendGameResponse(FString& ResponseMSG);
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

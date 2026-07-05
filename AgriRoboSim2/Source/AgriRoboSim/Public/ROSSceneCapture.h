@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "ROS2NodeComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Components/SceneCaptureComponent2D.h"
 #include "Engine/TextureRenderTarget2D.h"
 #include "sensor_msgs/Image.h"
 #include "ROSSceneCapture.generated.h"
@@ -65,8 +66,11 @@ public:
 	UFUNCTION()
 	FString CheckROSEncoding();
 	UFUNCTION()
-	void ReadRenderTargetPerRHI();
-
+	void ReadRenderTargetPerRHIBlock();
+	UFUNCTION()
+	void ReadRenderTargetPerRHIStream();
+	UFUNCTION()
+	void UpdateFrameID(bool force = false);
 	UFUNCTION()
 	void UpdateSceneCaptureCameraParameters(UCameraComponent* Camera, UWorld* WorldContext);
 
@@ -75,4 +79,10 @@ public:
 	std::shared_ptr<uint8[]> img;
 	ROSMessages::std_msgs::Header msg_header;
 	FString topic_name;
+	FString frame_id;
+	UPROPERTY()
+	TArray<AActor*> IDSources;
+
+	bool is_publishing;
+	bool is_streaming;
 };
